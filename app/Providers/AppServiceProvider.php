@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Settings\SchoolSettings;
+use Filament\Facades\Filament;
+use Filament\Infolists\Components\TextEntry;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        TextEntry::configureUsing(function (TextEntry $textEntry) {
+            $textEntry->placeholder('Untitled');
+        });
     }
 }

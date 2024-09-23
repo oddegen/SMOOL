@@ -13,4 +13,9 @@ class Subject extends Model
         'name',
         'code',
     ];
+
+    public function teachers()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

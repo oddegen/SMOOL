@@ -14,10 +14,6 @@ class SectionSeeder extends Seeder
      */
     public function run(): void
     {
-        $batches = Batch::factory(12)->create();
-
-        $batches->each(function ($batch) {
-            Section::factory()->count(5)->for($batch)->create();
-        });
+        Batch::factory(7)->has(Section::factory(5))->create();
     }
 }

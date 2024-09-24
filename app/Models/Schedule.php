@@ -11,7 +11,7 @@ class Schedule extends Model
 
     protected $fillable = ['title', 'starts_at', 'ends_at', 'section_id', 'user_id'];
 
-    public function batches()
+    public function batch()
     {
         return $this->belongsTo(Batch::class);
     }
@@ -24,5 +24,10 @@ class Schedule extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
     }
 }

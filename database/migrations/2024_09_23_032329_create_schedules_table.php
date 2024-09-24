@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('title');
             $table->timestamp('starts_at');
             $table->timestamp('ends_at');
-            $table->foreignIdFor(Batch::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Section::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();

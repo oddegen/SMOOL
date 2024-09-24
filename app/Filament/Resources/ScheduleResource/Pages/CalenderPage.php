@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ScheduleResource\Pages;
 
 use App\Filament\Resources\ScheduleResource;
+use App\Filament\Widgets\CalendarWidget;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\Page;
 

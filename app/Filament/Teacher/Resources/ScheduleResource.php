@@ -13,50 +13,47 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleResource extends EventResource
 {
-    // public static function table(Table $table): Table
-    // {
-    //     return $table
-    //         ->columns([
-    //             Tables\Columns\TextColumn::make('title')
-    //                 ->searchable(),
-    //             Tables\Columns\TextColumn::make('starts_at')
-    //                 ->dateTime()
-    //                 ->sortable(),
-    //             Tables\Columns\TextColumn::make('ends_at')
-    //                 ->dateTime()
-    //                 ->sortable(),
-    //             Tables\Columns\TextColumn::make('section_id')
-    //                 ->numeric()
-    //                 ->sortable(),
-    //             Tables\Columns\TextColumn::make('user_id')
-    //                 ->numeric()
-    //                 ->sortable(),
-    //             Tables\Columns\TextColumn::make('created_at')
-    //                 ->dateTime()
-    //                 ->sortable()
-    //                 ->toggleable(isToggledHiddenByDefault: true),
-    //             Tables\Columns\TextColumn::make('updated_at')
-    //                 ->dateTime()
-    //                 ->sortable()
-    //                 ->toggleable(isToggledHiddenByDefault: true),
-    //         ])
-    //         ->filters([
-    //             //
-    //         ])
-    //         ->actions([
-    //             Tables\Actions\ViewAction::make(),
-    //             Tables\Actions\EditAction::make(),
-    //         ])
-    //         ->bulkActions([
-    //             Tables\Actions\BulkActionGroup::make([
-    //                 Tables\Actions\DeleteBulkAction::make(),
-    //             ]),
-    //         ]);
-    // }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('user_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ])
+            ->modifyQueryUsing(function (Builder $query) {
+                return $query->where('user_id', Auth::user()->id);
+            });
+    }
 
     // public static function getRelations(): array
     // {

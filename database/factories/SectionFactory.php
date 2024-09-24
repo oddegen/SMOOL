@@ -19,7 +19,6 @@ class SectionFactory extends Factory
     {
         return [
             'name' => 'Section ' . fake()->unique()->word(),
-            'batch_id' => Batch::factory(),
         ];
     }
 }

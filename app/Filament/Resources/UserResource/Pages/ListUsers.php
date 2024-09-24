@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+use Filament\Actions;
+
 class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;

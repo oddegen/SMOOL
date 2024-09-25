@@ -21,13 +21,18 @@ class Section extends Model
         return $this->belongsToMany(Batch::class)->withPivot('year');
     }
 
-    public function users()
+    public function sectionUsers()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(SectionUser::class);
     }
 
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
     }
 }

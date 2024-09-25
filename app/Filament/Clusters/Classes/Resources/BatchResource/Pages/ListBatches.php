@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\BatchResource\Pages;
+namespace App\Filament\Clusters\Classes\Resources\BatchResource\Pages;
 
-use App\Filament\Resources\BatchResource;
+use App\Filament\Clusters\Classes\Resources\BatchResource;
 use App\Settings\SchoolSettings;
 use Filament\Actions;
 use Filament\Forms\Components\Group;

@@ -84,24 +84,20 @@ class ViewUser extends ViewRecord
                                     ->columnSpanFull(),
                             ])
                             ->visible(fn($record) => $record->role->name === 'Teacher'),
-                        Section::make()
-                            ->heading('Class')
-                            ->schema([
-                                Grid::make()
-                                    ->schema([
-                                        TextEntry::make('batches.*.name')
-                                            ->label('Name'),
-                                        TextEntry::make('batches.*.pivot.year')
-                                            ->label('Year'),
-                                        TextEntry::make('sections.*.name')
-                                            ->label('Section'),
-                                        TextEntry::make('sections.*.code')
-                                            ->label('Code'),
-                                    ])
-                                    ->columns()
-                                    ->columnSpanFull(),
-                            ])
-                            ->visible(fn($record) => $record->role->name === 'Student'),
+                        // Section::make()
+                        //     ->heading('Class')
+                        //     ->schema([
+                        //         Grid::make()
+                        //             ->schema([
+                        //                 TextEntry::make('batches.*.name')
+                        //                     ->label('Batch'),
+                        //                 TextEntry::make('sections.*.name')
+                        //                     ->label('Section'),
+                        //             ])
+                        //             ->columns()
+                        //             ->columnSpanFull()
+                        //     ])
+                        //     ->visible(fn($record) => $record->role->name === 'Student'),
                     ])
                     ->columns()
                     ->columnSpanFull()

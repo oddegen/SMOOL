@@ -23,6 +23,7 @@ use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 class CalendarWidget extends FullCalendarWidget
 {
     public Model | string | null $model = Schedule::class;
+    public ?Section $section = null;
 
     public function getFormSchema(): array
     {
@@ -87,6 +88,27 @@ class CalendarWidget extends FullCalendarWidget
         ];
     }
 
+    protected function getViewData(): array
+    {
+        if ($this->section) {
+            $schedules = $this->section->schedules;
+        } else {
+            $schedules = Schedule::all();
+        }
+
+        return [
+            'events' => $schedules->map(function ($schedule) {
+                return [
+                    'id' => $schedule->id,
+                    'title' => $schedule->title,
+                    'start' => $schedule->start_time,
+                    'end' => $schedule->end_time,
+                    // Add any other relevant fields
+                ];
+            }),
+        ];
+    }
+
     public function fetchEvents(array $fetchInfo): array
     {
         return Schedule::query()
@@ -103,5 +125,27 @@ class CalendarWidget extends FullCalendarWidget
                 ]
             )
             ->all();
+    }
+
+    public function config(): array
+    {
+        return [
+            'firstDay' => 1,
+            'headerToolbar' => [
+                'left' => '',
+                'center' => '',
+                'right' => '',
+            ],
+            'dayHeaderFormat' =>
+            [
+                'weekday' => 'long'
+            ],
+            'hiddenDays' => [0, 6]
+        ];
+    }
+
+    public static function canView(): bool
+    {
+        return true;
     }
 }

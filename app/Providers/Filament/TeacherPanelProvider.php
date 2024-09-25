@@ -33,7 +33,7 @@ class TeacherPanelProvider extends PanelProvider
             ->path('teacher')
             ->login(TeacherLogin::class)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Slate,
             ])
             ->discoverResources(in: app_path('Filament/Teacher/Resources'), for: 'App\\Filament\\Teacher\\Resources')
             ->discoverPages(in: app_path('Filament/Teacher/Pages'), for: 'App\\Filament\\Teacher\\Pages')

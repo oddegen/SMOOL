@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\BatchResource\Pages;
+namespace App\Filament\Clusters\Classes\Resources\BatchResource\Pages;
 
-use App\Filament\Resources\BatchResource;
+use App\Filament\Clusters\Classes\Resources\BatchResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
@@ -15,5 +15,10 @@ class EditBatch extends EditRecord
         return [
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function getFormActions(): array
+    {
+        return [];
     }
 }

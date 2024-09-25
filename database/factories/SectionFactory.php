@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Batch;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +17,7 @@ class SectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'Section ' . fake()->unique()->word(),
+            'name' => 'Section ' . fake()->unique()->randomLetter(),
         ];
     }
 }

@@ -91,4 +91,14 @@ class User extends Authenticatable implements HasAvatar
     {
         return $this->hasMany(Schedule::class);
     }
+
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function sectionUsers()
+    {
+        return $this->hasMany(SectionUser::class, 'student_id');
+    }
 }

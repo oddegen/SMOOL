@@ -189,4 +189,14 @@ class EventResource extends Resource
             'view' => Pages\ViewEvent::route('/{record}/view'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return __('Event');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Events');
+    }
 }

@@ -69,4 +69,14 @@ class SubjectResource extends Resource
             'index' => Pages\ManageSubjects::route('/'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return __('Subject');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Subjects');
+    }
 }

@@ -63,4 +63,14 @@ class ScheduleResource extends Resource
             'index' => Pages\CalenderPage::route('/'),
         ];
     }
+
+    public static function getModelLabel(): string
+    {
+        return __('Schedule');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Schedules');
+    }
 }

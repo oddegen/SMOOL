@@ -4,14 +4,16 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
-class User extends Authenticatable implements HasAvatar
+class User extends Authenticatable implements HasAvatar, FilamentUser
 {
     use HasFactory, Notifiable;
 
@@ -100,5 +102,37 @@ class User extends Authenticatable implements HasAvatar
     public function sectionUsers()
     {
         return $this->hasMany(SectionUser::class, 'student_id');
+    }
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
+
+    public function teacherGradeComponents()
+    {
+        return $this->hasMany(GradeComponent::class, 'teacher_id');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() == 'admin') {
+            return $this->role->name === 'Admin';
+        }
+
+        if ($panel->getId() == 'teacher') {
+            return $this->role->name === 'Teacher';
+        }
+
+        if ($panel->getId() == 'student') {
+            return $this->role->name === 'Student';
+        }
+
+        return false;
     }
 }

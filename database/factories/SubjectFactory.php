@@ -29,7 +29,7 @@ class SubjectFactory extends Factory
             'Physical Education',
             'Art',
             'Music',
-            'Drama'
+            'Drama',
         ];
 
         static $index = 0;

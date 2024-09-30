@@ -5,8 +5,8 @@ namespace App\Filament\Clusters\Classes\Resources;
 use App\Filament\Clusters\Classes;
 use App\Filament\Clusters\Classes\Resources\SectionResource\Pages;
 use App\Filament\Clusters\Classes\Resources\SectionResource\RelationManagers;
-use App\Filament\Resources\ScheduleResource\Pages\CalenderPage;
 use App\Filament\Widgets\CalendarWidget;
+use App\Filament\Widgets\SectionScheduleCalendar;
 use App\Models\Schedule;
 use App\Models\Section;
 use Filament\Forms;
@@ -87,22 +87,14 @@ class SectionResource extends Resource
             'index' => Pages\ListSections::route('/'),
             'create' => Pages\CreateSection::route('/create'),
             'edit' => Pages\EditSection::route('/{record}/edit'),
+            'schedule' => Pages\Calender::route('/{record}/schedule')
         ];
     }
 
     public static function getWidgets(): array
     {
         return [
-            CalendarWidget::class,
-        ];
-    }
-
-    protected function getFooterWidgets(): array
-    {
-        return [
-            CalendarWidget::make([
-                'model' => Schedule::class,
-            ]),
+            SectionResource\Widgets\CalendarWidget::class,
         ];
     }
 }

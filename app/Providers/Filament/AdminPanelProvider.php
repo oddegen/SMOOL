@@ -4,10 +4,13 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Dashboard;
+use App\Http\Middleware\RedirectBasedOnRole;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationBuilder;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -58,7 +61,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                RedirectBasedOnRole::class,
             ])
             ->plugins([
                 FilamentEditProfilePlugin::make()
@@ -84,6 +87,9 @@ class AdminPanelProvider extends PanelProvider
                 FilamentFullCalendarPlugin::make()
                     ->selectable()
                     ->editable()
+                    ->plugins([
+                        'rrule',
+                    ])
             )
             ->userMenuItems([
                 'profile' => MenuItem::make()
@@ -94,6 +100,7 @@ class AdminPanelProvider extends PanelProvider
                 // ->visible(function (): bool {
                 //     return Auth::user()->company()->exists();
                 // }),
-            ]);
+            ])
+            ->sidebarCollapsibleOnDesktop();
     }
 }

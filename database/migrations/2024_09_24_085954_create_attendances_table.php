@@ -18,9 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('teacher_id');
             $table->foreign('student_id')->references('id')->on('users')->comment("Student")->constrained()->cascadeOnDelete();
-            $table->foreign('teacher_id')->references('id')->on('users')->comment("Student")->constrained()->cascadeOnDelete();
+            $table->foreign('teacher_id')->references('id')->on('users')->comment("Teacher")->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Section::class)->constrained()->cascadeOnDelete();
-            $table->string('status')->default('Present');
+            $table->string('status')->default('unknown');
             $table->timestamp('time')->default(now());
             $table->timestamps();
         });

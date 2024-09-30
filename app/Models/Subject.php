@@ -24,4 +24,14 @@ class Subject extends Model
     {
         return $this->hasMany(Schedule::class);
     }
+
+    public function gradingComponents()
+    {
+        return $this->hasMany(GradeComponent::class);
+    }
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
 }

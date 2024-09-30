@@ -4,10 +4,12 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\TeacherLogin;
+use App\Http\Middleware\RedirectBasedOnRole;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationBuilder;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -23,6 +25,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 
 class TeacherPanelProvider extends PanelProvider
 {
@@ -54,9 +57,13 @@ class TeacherPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                RedirectBasedOnRole::class,
             ])
             ->plugins([
+                FilamentFullCalendarPlugin::make()
+                    ->plugins([
+                        'rrule',
+                    ]),
                 FilamentEditProfilePlugin::make()
                     ->slug('my-profile')
                     ->setTitle('My Profile')
@@ -85,6 +92,6 @@ class TeacherPanelProvider extends PanelProvider
                 // ->visible(function (): bool {
                 //     return Auth::user()->company()->exists();
                 // }),
-            ]);;
+            ]);
     }
 }

@@ -74,4 +74,15 @@ class Schedule extends Model
             'school_year' => $this->school_year,
         ]);
     }
+
+    public function hasOverlap()
+    {
+        return self::where('user_id', $this->user_id)
+            ->where('id', '!=', $this->id)
+            ->where(function ($query) {
+                $query->whereTime('starts_at', '<', $this->ends_at)
+                    ->whereTime('ends_at', '>', $this->starts_at);
+            })
+            ->exists();
+    }
 }

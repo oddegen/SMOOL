@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\UserResource\Pages;
 
+use App\Filament\Exports\UserExporter;
+use App\Filament\Imports\UserImporter;
 use App\Filament\Resources\UserResource;
 use App\Mail\UserCreated;
 use App\Models\Role;
@@ -23,6 +25,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 use Filament\Actions;
+use Filament\Actions\ExportAction;
+use Filament\Actions\ImportAction;
 
 class ListUsers extends ListRecords
 {
@@ -131,7 +135,9 @@ class ListUsers extends ListRecords
                             'password' => bcrypt($data['password']),
                         ]);
 
-                        Mail::to($data['original_email'])->send(new UserCreated());
+                        $expiresAt = now()->addDay();
+
+                        User::where('original_email', $data['original_email'])->first()->sendWelcomeNotification($expiresAt);
                     }
                 )
                 ->successNotificationTitle("User created")
@@ -139,6 +145,10 @@ class ListUsers extends ListRecords
                 ->successRedirectUrl(fn(Model $record) => route('filament.admin.resources.users.view', [
                     'record' => $record,
                 ])),
+            ImportAction::make('Import Users')
+                ->importer(UserImporter::class),
+            ExportAction::make('Export Users')
+                ->exporter(UserExporter::class)
         ];
     }
 }

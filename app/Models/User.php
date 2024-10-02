@@ -12,10 +12,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
+use Spatie\WelcomeNotification\ReceivesWelcomeNotification;
 
-class User extends Authenticatable implements HasAvatar, FilamentUser
+class User extends Authenticatable implements HasAvatar
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, ReceivesWelcomeNotification;
 
     /**
      * The attributes that are mass assignable.
@@ -81,7 +82,12 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
 
     public function sections()
     {
-        return $this->belongsToMany(Section::class);
+        return $this->belongsToMany(Section::class)->withPivot('year');
+    }
+
+    public function currentSection()
+    {
+        return $this->sectionUsers()->where('year', date('Y'))->first();
     }
 
     public function batches()
@@ -134,5 +140,10 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
         }
 
         return false;
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class, 'student_id');
     }
 }

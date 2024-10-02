@@ -24,9 +24,11 @@ use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 
 class CalendarWidget extends FullCalendarWidget
 {
+
+
     public function fetchEvents(array $fetchInfo): array
     {
-        return Schedule::query()->whereBelongsTo(Auth::user(), 'user')
+        return Schedule::query()->whereBelongsTo(Auth::user())
             ->where('starts_at', '<=', $fetchInfo['end'])
             ->where('ends_at', '>=', $fetchInfo['start'])
             ->get()

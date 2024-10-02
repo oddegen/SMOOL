@@ -11,10 +11,6 @@ class ManageSchool extends SettingsPage
 {
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    protected static ?string $navigationLabel = 'School';
-
-    protected static ?string $navigationGroup = 'Settings';
-
     protected static string $settings = SchoolSettings::class;
 
     protected static ?int $navigationSort = 3;
@@ -74,5 +70,15 @@ class ManageSchool extends SettingsPage
                         'romans' => 'Romans',
                     ]),
             ]);
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Settings');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('School');
     }
 }

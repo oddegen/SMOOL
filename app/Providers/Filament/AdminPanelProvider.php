@@ -91,6 +91,7 @@ class AdminPanelProvider extends PanelProvider
                         'rrule',
                     ])
             )
+            ->plugin(\TomatoPHP\FilamentInvoices\FilamentInvoicesPlugin::make())
             ->userMenuItems([
                 'profile' => MenuItem::make()
                     ->label(fn() => Auth::user()->name)
@@ -101,6 +102,7 @@ class AdminPanelProvider extends PanelProvider
                 //     return Auth::user()->company()->exists();
                 // }),
             ])
-            ->sidebarCollapsibleOnDesktop();
+            ->sidebarCollapsibleOnDesktop()
+            ->databaseNotifications();
     }
 }

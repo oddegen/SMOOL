@@ -4,14 +4,12 @@
     "Dashboard": "ዳሽቦርድ",
     "New": "አዲስ",
     "Subjects": "ርዕሰጉዳይ",
-    "Classes": "ክፍሎች",
-    "Class": "ክፍል",
     "Sections": "ሴክሽኖች",
     "Section": "ሴክሽን",
     "Events": "ዠግጅቶች",
     "Schedules": "መርሐግብሮች",
     "Schedule": "መርሐግብር",
-    "School": "ትምህርትቤት",
+    "School": "ትምህርት ቤት",
     "today": "ዛሬ",
     "week": "ሳምንት",
     "month": "ወር",
@@ -29,5 +27,9 @@
     "Role": "ሚና",
     "Create": "ፍጠር",
     "Cancel": "ሰርዝ",
-    "Settings": "ቅንብሮች"
+    "Settings": "ቅንብሮች",
+    "Users": "አባላት",
+    "User": "አባላት",
+    "Import": "አስቀምጥ",
+    "Export": "ምንጭ"
 }

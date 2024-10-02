@@ -15,10 +15,13 @@
         "joaopaulolndev/filament-edit-profile": "^1.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "riari/laravel-forum": "^6.0",
         "saade/filament-fullcalendar": "^3.0",
         "spatie/laravel-translatable": "^6.8",
+        "spatie/laravel-welcome-notification": "^2.4",
         "stichoza/google-translate-php": "^5.2",
-        "tanmuhittin/laravel-google-translate": "^2.3"
+        "tanmuhittin/laravel-google-translate": "^2.3",
+        "tomatophp/filament-invoices": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

@@ -2,7 +2,6 @@
 
 namespace App\Filament\Teacher\Pages;
 
-use App\Filament\Widgets\CalendarWidget;
 use Filament\Pages\Page;
 
 class ViewSchedule extends Page

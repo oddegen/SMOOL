@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
-use App\Settings\SchoolSettings;
+use App\Http\Responses\LoginResponse;
+use App\Models\User;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
-use Filament\Facades\Filament;
+use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
 use Filament\Infolists\Components\TextEntry;
 use Illuminate\Support\ServiceProvider;
+use TomatoPHP\FilamentInvoices\Facades\FilamentInvoices;
+use TomatoPHP\FilamentInvoices\Services\Contracts\InvoiceFor;
+use TomatoPHP\FilamentInvoices\Services\Contracts\InvoiceFrom;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
     }
 
     /**
@@ -29,7 +33,17 @@ class AppServiceProvider extends ServiceProvider
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales(['am', 'en', 'fr']); // also accepts a closure
+                ->locales(['am', 'en', 'fr', 'es']); // also accepts a closure
         });
+
+        FilamentInvoices::registerFor([
+            InvoiceFor::make(User::class)
+                ->label('User')
+        ]);
+        FilamentInvoices::registerFrom([
+            InvoiceFrom::make(User::class)
+                ->label('Staff')
+                ->column('name')
+        ]);
     }
 }

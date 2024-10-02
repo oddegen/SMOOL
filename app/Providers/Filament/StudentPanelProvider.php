@@ -88,6 +88,8 @@ class StudentPanelProvider extends PanelProvider
                 // ->visible(function (): bool {
                 //     return Auth::user()->company()->exists();
                 // }),
-            ]);
+            ])
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('10s');
     }
 }

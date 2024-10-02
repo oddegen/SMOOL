@@ -2,6 +2,12 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\AdvancedStatsOverviewWidget;
+use App\Filament\Widgets\Events;
+use App\Filament\Widgets\InvoiceTable;
+use App\Filament\Widgets\PerformanceMetrics;
+use App\Filament\Widgets\RecentAnnouncements;
+
 class Dashboard extends \Filament\Pages\Dashboard
 {
     // ...
@@ -11,8 +17,19 @@ class Dashboard extends \Filament\Pages\Dashboard
         return __('Dashboard');
     }
 
+    public function getColumns(): int|string|array
+    {
+        return 3;
+    }
+
     public function getWidgets(): array
     {
-        return [];
+        return [
+            AdvancedStatsOverviewWidget::class,
+            Events::class,
+            RecentAnnouncements::class,
+            PerformanceMetrics::class,
+            InvoiceTable::class
+        ];
     }
 }

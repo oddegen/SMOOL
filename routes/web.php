@@ -19,3 +19,10 @@ Route::group(['middleware' => ['web', WelcomesNewUsers::class,]], function () {
     Route::get('welcome/{user}', [LoginController::class, 'showWelcomeForm'])->name('welcome');
     Route::post('welcome/{user}', [LoginController::class, 'savePassword']);
 });
+
+Route::post('pay', 'App\Http\Controllers\ChapaController@initialize')->name('pay');
+
+// The callback url after a payment
+Route::get('callback/{reference}', 'App\Http\Controllers\ChapaController@callback')->name('callback');
+
+Route::view('/welcome', 'welcome');

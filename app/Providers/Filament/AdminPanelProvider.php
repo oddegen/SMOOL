@@ -90,6 +90,7 @@ class AdminPanelProvider extends PanelProvider
                     ->plugins([
                         'rrule',
                     ])
+                    ->locale(config('app.locale'))
             )
             ->plugin(\TomatoPHP\FilamentInvoices\FilamentInvoicesPlugin::make())
             ->userMenuItems([
@@ -102,7 +103,6 @@ class AdminPanelProvider extends PanelProvider
                 //     return Auth::user()->company()->exists();
                 // }),
             ])
-            ->sidebarCollapsibleOnDesktop()
             ->databaseNotifications();
     }
 }

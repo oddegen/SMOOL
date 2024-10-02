@@ -10,12 +10,12 @@ class EnrollmentPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->role->name === 'Teacher' || $user->role->name === 'Student';
+        return true;
     }
 
     public function view(User $user, Enrollment $enrollment): bool
     {
-        return $user->id === $enrollment->student_id;
+        return $user->id === $enrollment->student_id || $user->role->name === 'Teacher';
     }
 
     public function create(User $user): bool
@@ -25,11 +25,11 @@ class EnrollmentPolicy
 
     public function update(User $user, Enrollment $enrollment): bool
     {
-        return $user->id === $enrollment->student_id && $enrollment->status === 'pending';
+        return $user->role->name === 'Teacher';
     }
 
     public function delete(User $user, Enrollment $enrollment): bool
     {
-        return $user->id === $enrollment->student_id && $enrollment->status === 'pending';
+        return $user->role->name === 'Teacher';
     }
 }

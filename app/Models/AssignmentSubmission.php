@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,5 +34,10 @@ class AssignmentSubmission extends Model
     public function student()
     {
         return $this->belongsTo(User::class, 'student_id');
+    }
+
+    public function canSubmit()
+    {
+        return Carbon::parse($this->assignment->due_date)->isFuture();
     }
 }

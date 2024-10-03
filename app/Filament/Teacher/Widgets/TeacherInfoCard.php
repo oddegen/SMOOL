@@ -10,7 +10,7 @@ class TeacherInfoCard extends Widget
 {
     protected static string $view = 'filament.teacher.widgets.teacher-info-card';
 
-    public function getTeacher()
+    public function getUser()
     {
         return User::find(auth()->user()->id);
     }

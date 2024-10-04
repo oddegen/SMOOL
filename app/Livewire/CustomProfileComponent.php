@@ -86,10 +86,15 @@ class CustomProfileComponent extends Component implements HasForms
         try {
             $data = $this->form->getState();
 
-            $this->user->update(array_merge(
-                $data,
-                ['is_profile_complete' => true]
-            ));
+            $isProfileComplete = !empty($data['first_name']) &&
+                !empty($data['last_name']) &&
+                !empty($data['phone']) &&
+                !empty($data['gender']) &&
+                !empty($data['address']);
+
+            $data['is_profile_complete'] = $isProfileComplete;
+
+            $this->user->update($data);
         } catch (Halt $exception) {
             return;
         }

@@ -13,16 +13,13 @@ class TeacherStats extends BaseWidget
 
     protected function getStats(): array
     {
-        $teacherId = Auth::id();
-        $currentYear = now()->year;
+        $teacherId = Auth::user()->id;
 
         $sectionCount = SectionUser::where('teacher_id', $teacherId)
-            ->where('year', $currentYear)
             ->distinct('section_id')
             ->count();
 
         $studentCount = SectionUser::where('teacher_id', $teacherId)
-            ->where('year', $currentYear)
             ->distinct('student_id')
             ->count();
 

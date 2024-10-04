@@ -9,4 +9,6 @@ class ViewSchedule extends Page
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $view = 'filament.teacher.pages.view-schedule';
+
+    protected static ?string $navigationGroup = 'Resources';
 }

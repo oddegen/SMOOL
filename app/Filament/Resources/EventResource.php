@@ -7,6 +7,7 @@ use App\Filament\Resources\EventResource\RelationManagers;
 use App\Models\Batch;
 use App\Models\Event;
 use App\Models\Section as ModelsSection;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -38,7 +39,7 @@ class EventResource extends Resource
 {
     protected static ?string $model = Event::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-calendar';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
     protected static ?string $navigationGroup = 'Resources';
 
@@ -90,8 +91,9 @@ class EventResource extends Resource
                                             if (!$batchIds) {
                                                 return [];
                                             }
-                                            $batches = Batch::where('id', $batchIds)->get();
-                                            return ModelsSection::whereBelongsTo($batches)->pluck('name', 'id');
+                                            return ModelsSection::whereHas('batches', function ($query) use ($batchIds) {
+                                                $query->whereIn('batch_id', $batchIds);
+                                            })->pluck('name', 'id');
                                         })
 
                                 ])
@@ -105,19 +107,16 @@ class EventResource extends Resource
                             ->columnSpanFull(),
                         DatePicker::make('start_date')
                             ->format('Y-m-d')
-                            ->minDate(now())
+                            ->minDate(now()->startOfDay())
                             ->required(),
                         DatePicker::make('end_date')
                             ->format('Y-m-d')
-                            ->minDate(now()->addDay())
                             ->required(),
                         TimePicker::make('start_time')
                             ->format('H:i:s')
-                            ->minDate(now())
                             ->required(),
                         TimePicker::make('end_time')
                             ->format('H:i:s')
-                            ->minDate(now()->addMinutes(5))
                             ->required(),
                     ])
                         ->grow(false)

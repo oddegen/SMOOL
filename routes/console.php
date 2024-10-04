@@ -13,7 +13,8 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::job(new CreateDailyAttendanceRecords())
-    ->dailyAt('00:01')
+    // ->dailyAt('00:01')
+    ->everyMinute()
     ->onSuccess(function () {
         Log::info('Daily attendance records created successfully');
     })

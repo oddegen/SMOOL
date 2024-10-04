@@ -73,7 +73,8 @@ class UserResource extends Resource
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ])
-            ->modifyQueryUsing(fn(Builder $query) => $query->whereNot('id', Auth::user()->id));
+            ->modifyQueryUsing(fn(Builder $query) => $query->whereNot('id', Auth::user()->id))
+            ->poll('10s');
     }
 
     public static function getRelations(): array

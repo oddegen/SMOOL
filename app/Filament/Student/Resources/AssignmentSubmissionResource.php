@@ -24,7 +24,7 @@ class AssignmentSubmissionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('assignment_id')
-                    ->relationship('assignment', 'title', modifyQueryUsing: fn(Builder $query) => $query->where('status', 'published')->where('due_date', '>', now()))
+                    ->relationship('assignment', 'title', modifyQueryUsing: fn(Builder $query) => $query->where('due_date', '>', now()))
                     ->required()
                     ->disabled(fn($record) => $record !== null),
                 Forms\Components\MarkdownEditor::make('content')

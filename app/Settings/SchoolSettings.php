@@ -19,6 +19,7 @@ class SchoolSettings extends Settings
     public int $batch_start;
     public int $batch_end;
     public string $section_suffix_type;
+    public string $domain;
 
     public static function group(): string
     {

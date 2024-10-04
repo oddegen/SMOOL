@@ -64,7 +64,7 @@ class CreateDailyAttendanceRecords implements ShouldQueue
             Log::info("Processing schedules for teacher ID: {$teacher->id}");
 
             $schedules = Schedule::where('user_id', $teacher->id)
-                ->whereDate('starts_at', $date)
+                // ->whereDate('starts_at', $date)
                 ->with(['section.sectionUsers' => function ($query) use ($teacher) {
                     $query->where('teacher_id', $teacher->id)
                         ->where('year', now()->year) // Apply the current year filter directly

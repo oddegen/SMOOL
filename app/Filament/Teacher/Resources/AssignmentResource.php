@@ -34,7 +34,7 @@ class AssignmentResource extends Resource
                 MarkdownEditor::make('description')
                     ->columnSpanFull(),
                 Forms\Components\Select::make('section_id')
-                    ->relationship('section', 'name')
+                    ->relationship('section', 'name', modifyQueryUsing: fn(Builder $query) => $query->where('teacher_id', auth()->user()->id))
                     ->required(),
                 Forms\Components\DatePicker::make('due_date')
                     ->required(),

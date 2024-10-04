@@ -2,7 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\StudentLogin;
 use App\Filament\Student\Pages\StudentDashboard;
+use App\Http\Middleware\InsureActiveness;
 use App\Http\Middleware\RedirectBasedOnRole;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -35,6 +37,7 @@ class StudentPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Teal,
             ])
+            ->login(StudentLogin::class)
             ->discoverResources(in: app_path('Filament/Student/Resources'), for: 'App\\Filament\\Student\\Resources')
             ->discoverPages(in: app_path('Filament/Student/Pages'), for: 'App\\Filament\\Student\\Pages')
             ->pages([
@@ -55,6 +58,7 @@ class StudentPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 RedirectBasedOnRole::class,
+                InsureActiveness::class
             ])
             ->plugins([
                 FilamentFullCalendarPlugin::make()

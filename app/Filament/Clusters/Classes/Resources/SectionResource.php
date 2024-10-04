@@ -9,6 +9,7 @@ use App\Filament\Widgets\CalendarWidget;
 use App\Filament\Widgets\SectionScheduleCalendar;
 use App\Models\Schedule;
 use App\Models\Section;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,6 +29,8 @@ class SectionResource extends Resource
 
     protected static ?string $cluster = Classes::class;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -35,6 +38,11 @@ class SectionResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('teacher_id')
+                    ->options(User::where('role_id', 2)->pluck('name', 'id'))
+                    ->label('Teacher')
+                    ->preload()
+                    ->required()
             ]);
     }
 

@@ -21,7 +21,7 @@ class StudentSchedules extends FullCalendarWidget
             ->map(
                 fn(Schedule $schedule) => EventData::make()
                     ->id($schedule->id)
-                    ->title($schedule->title)
+                    ->title($schedule->subject()->first()->name)
                     ->start($schedule->starts_at)
                     ->end($schedule->ends_at)
             )

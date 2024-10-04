@@ -6,6 +6,7 @@ use App\Models\User;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Illuminate\Support\Facades\Hash;
 
 class UserImporter extends Importer
 {
@@ -18,53 +19,59 @@ class UserImporter extends Importer
                 ->requiredMapping()
                 ->rules(['required', 'max:255']),
             ImportColumn::make('email')
+                ->requiredMapping()
                 ->rules(['email', 'max:255']),
-            ImportColumn::make('email_verified_at')
-                ->rules(['email', 'datetime']),
             ImportColumn::make('password')
                 ->requiredMapping()
                 ->rules(['required', 'max:255']),
-            ImportColumn::make('role_id')
-                ->numeric()
-                ->rules(['integer']),
+            ImportColumn::make('role')
+                ->requiredMapping()
+                ->relationship(resolveUsing: 'name'),
             ImportColumn::make('first_name')
+                ->ignoreBlankState()
                 ->rules(['max:255']),
             ImportColumn::make('last_name')
+                ->ignoreBlankState()
                 ->rules(['max:255']),
             ImportColumn::make('phone')
+                ->ignoreBlankState()
                 ->rules(['max:20']),
-            ImportColumn::make('address'),
+            ImportColumn::make('address')
+                ->ignoreBlankState(),
             ImportColumn::make('gender')
+                ->ignoreBlankState()
                 ->rules(['max:255']),
             ImportColumn::make('original_email')
+                ->ignoreBlankState()
                 ->rules(['email', 'max:255']),
             ImportColumn::make('is_profile_complete')
-                ->requiredMapping()
                 ->boolean()
                 ->rules(['required', 'boolean']),
-            ImportColumn::make('bio'),
+            ImportColumn::make('bio')
+                ->ignoreBlankState(),
             ImportColumn::make('year')
+                ->ignoreBlankState()
                 ->numeric()
                 ->rules(['integer']),
             ImportColumn::make('status')
+                ->ignoreBlankState()
                 ->boolean()
                 ->rules(['boolean']),
-            ImportColumn::make('custom_fields'),
             ImportColumn::make('avatar_url')
+                ->ignoreBlankState()
                 ->rules(['max:255']),
             ImportColumn::make('roll_no')
+                ->ignoreBlankState()
                 ->rules(['max:255']),
-            ImportColumn::make('welcome_valid_until')
-                ->rules(['datetime']),
         ];
     }
 
     public function resolveRecord(): ?User
     {
-        // return User::firstOrNew([
-        //     // Update existing records, matching them by `$this->data['column_name']`
-        //     'email' => $this->data['email'],
-        // ]);
+        return User::firstOrNew([
+            'email' => $this->data['email'],
+            'original_email' => $this->data['original_email'],
+        ]);
 
         return new User();
     }

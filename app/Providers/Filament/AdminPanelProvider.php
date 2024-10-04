@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Dashboard;
+use App\Http\Middleware\InsureActiveness;
 use App\Http\Middleware\RedirectBasedOnRole;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -62,6 +63,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 RedirectBasedOnRole::class,
+                InsureActiveness::class
             ])
             ->plugins([
                 FilamentEditProfilePlugin::make()

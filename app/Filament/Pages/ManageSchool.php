@@ -52,6 +52,8 @@ class ManageSchool extends SettingsPage
                     ])
                     ->default('light')
                     ->inline(),
+                Forms\Components\TextInput::make('domain')
+                    ->label('Domain'),
                 Forms\Components\TextInput::make('batch_prefix')
                     ->label('Batch Prefix'),
                 Forms\Components\TextInput::make('section_prefix')

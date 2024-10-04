@@ -10,6 +10,7 @@ use App\Models\Section;
 use App\Models\Subject;
 use App\Models\User;
 use Carbon\Carbon;
+use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
@@ -36,9 +37,12 @@ class CalendarWidget extends FullCalendarWidget
                 fn(Schedule $event) => [
                     'id' => $event->id,
                     'title' => $event->subject()->first()->name,
-                    'start' => $event->starts_at,
-                    'end' => $event->ends_at
-                    // 'duration' => $event->starts_at->diffInSeconds($event->ends_at),
+                    'rrule' => [
+                        'freq' => 'weekly',
+                        'dtstart' => $event->starts_at->format('Y-m-d\TH:i:s'),
+                        'until' => Carbon::parse($event->school_year . '-12-31')->format('Y-m-d'),
+                    ],
+                    'duration' => $event->starts_at->diffInSeconds($event->ends_at),
                 ]
             )
             ->all();

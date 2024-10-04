@@ -17,10 +17,14 @@ use Illuminate\Database\Eloquent\Builder;
 class Attendances extends Page implements HasTable
 {
     use InteractsWithTable;
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-viewfinder-circle';
 
     protected static string $view = 'filament.teacher.pages.attendances';
-    protected static ?string $navigationLabel = 'Take Attendance';
+    protected static ?string $navigationLabel = 'Attendance';
+
+    protected static ?string $navigationGroup = 'Resources';
+
+
 
     protected function getTableQuery()
     {
@@ -29,8 +33,8 @@ class Attendances extends Page implements HasTable
                 $query->whereHas('sectionUsers', function ($query) {
                     $query->where('teacher_id', Auth::user()->id);
                 });
-            })
-            ->whereDate('time', now()->toDateString());
+            });
+        // ->whereDate('time', now()->toDateString());
     }
 
     protected function table(Table $table): Table

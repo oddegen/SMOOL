@@ -3,6 +3,7 @@
 namespace App\Filament\Clusters\Classes\Resources\SectionResource\RelationManagers;
 
 use App\Models\User;
+use App\Models\SectionUser;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -22,37 +23,55 @@ class SectionUsersRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('student_id')
-                    ->formatStateUsing(function ($state) {
-                        return User::find($state)->name;
+                Forms\Components\Select::make('student_id')
+                    ->label('Student')
+                    ->options(function () {
+                        $currentYear = now()->year;
+                        return User::whereHas('role', function ($query) {
+                            $query->where('name', 'Student');
+                        })
+                            ->whereDoesntHave('sectionUsers', function ($query) use ($currentYear) {
+                                $query->where('year', $currentYear);
+                            })
+                            ->pluck('name', 'id');
                     })
-                    ->required()
-                    ->maxLength(255)
-                    ->unique(),
+                    ->searchable()
+                    ->required(),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('name')
+            ->recordTitleAttribute('student.name')
             ->columns([
-                Tables\Columns\TextColumn::make('student_id')
-                    ->formatStateUsing(function ($state) {
-                        return User::find($state)->name;
-                    }),
+                Tables\Columns\TextColumn::make('student.name')
+                    ->label('Student Name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('year')
+                    ->label('Year'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make('Add Student')
+                    ->label('Add Student')
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['year'] = now()->year;
+                        $data['teacher_id'] = $this->getOwnerRecord()->teacher_id;
+                        return $data;
+                    })
+                    ->after(function (SectionUser $record) {
+                        $this->resetTable();
+                    }),
             ])
             ->actions([
+                Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('view')
                     ->label('View')
                     ->url(fn(Model $record): string => route('filament.admin.resources.users.view', [
-                        'record' => $record,
+                        'record' => $record->student_id,
                     ])),
             ])
             ->bulkActions([

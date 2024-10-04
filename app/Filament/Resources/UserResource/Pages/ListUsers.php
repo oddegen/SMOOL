@@ -8,6 +8,7 @@ use App\Filament\Resources\UserResource;
 use App\Mail\UserCreated;
 use App\Models\Role;
 use App\Models\User;
+use App\Settings\SchoolSettings;
 use Filament\Actions\CreateAction;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Group;
@@ -60,7 +61,7 @@ class ListUsers extends ListRecords
                                         if ($get('original_email') != null) {
                                             $name = explode('@', $get('original_email'))[0];
                                             $randomString = Str::random(8);
-                                            $domain = '@example.com';
+                                            $domain = '@' . app(SchoolSettings::class)->domain . '.com';
                                             $set('email', $name . $randomString . $domain);
                                         }
                                     })

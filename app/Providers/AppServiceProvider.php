@@ -12,6 +12,7 @@ use TomatoPHP\FilamentInvoices\Facades\FilamentInvoices;
 use TomatoPHP\FilamentInvoices\Models\Invoice;
 use TomatoPHP\FilamentInvoices\Services\Contracts\InvoiceFor;
 use TomatoPHP\FilamentInvoices\Services\Contracts\InvoiceFrom;
+use App\Services\MarkdownParser;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
+        $this->app->singleton(MarkdownParser::class, function ($app) {
+            return new MarkdownParser();
+        });
     }
 
     /**

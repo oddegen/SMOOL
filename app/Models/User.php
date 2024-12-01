@@ -115,6 +115,11 @@ class User extends Authenticatable implements HasAvatar
         return $this->hasMany(Grade::class);
     }
 
+    public function studentGrades()
+    {
+        return $this->hasMany(Grade::class, 'student_id');
+    }
+
     public function teacherGradeComponents()
     {
         return $this->hasMany(GradeComponent::class, 'teacher_id');
@@ -150,5 +155,10 @@ class User extends Authenticatable implements HasAvatar
     public function assignments()
     {
         return $this->hasMany(Assignment::class);
+    }
+
+    public function generatedResources()
+    {
+        return $this->hasMany(GeneratedResource::class);
     }
 }

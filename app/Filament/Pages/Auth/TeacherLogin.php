@@ -11,7 +11,7 @@ class TeacherLogin extends BasePage
         parent::mount();
 
         $this->form->fill([
-            'email' => 'samuksdoTOE@digitalSchool.com',
+            'email' => 'teacher1@school.com',
             'password' => 'password',
             'remember' => true,
         ]);

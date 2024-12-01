@@ -11,7 +11,7 @@ class StudentLogin extends BasePage
         parent::mount();
 
         $this->form->fill([
-            'email' => 'SelamkKK44Bto@digitalSchool.com',
+            'email' => 'student23@email.com',
             'password' => 'password',
             'remember' => true,
         ]);

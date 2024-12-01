@@ -11,7 +11,7 @@
     <p>Your invoice has been created. Here are the details:</p>
     <ul>
         <li>Invoice Number: {{ $invoice->uuid }}</li>
-        <li>Total Amount: {{ number_format(100, 2) }} {{ $invoice->currency->iso }}</li>
+        <li>Total Amount: {{ number_format($invoice->total, 2) }} {{ $invoice->currency->iso }}</li>
         <li>Due Date: {{ $invoice->due_date->format('Y-m-d') }}</li>
     </ul>
     @if ($checkoutUrl)

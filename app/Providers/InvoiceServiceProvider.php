@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Observers\InvoiceObserver;
 use Illuminate\Support\ServiceProvider;
 use TomatoPHP\FilamentInvoices\Models\Invoice;
 use App\Listeners\HandleInvoiceCreated;
@@ -21,8 +22,6 @@ class InvoiceServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Invoice::created(function ($invoice) {
-            (new HandleInvoiceCreated)->handle($invoice);
-        });
+       Invoice::observe(InvoiceObserver::class);
     }
 }

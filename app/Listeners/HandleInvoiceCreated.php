@@ -21,6 +21,7 @@ class HandleInvoiceCreated
     {
         $reference = Chapa::generateReference();
 
+
         $paymentData = [
             'amount' => $invoice->total,
             'email' => $invoice->billedFor->email ?? $invoice->email,

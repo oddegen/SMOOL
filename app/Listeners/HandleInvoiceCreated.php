@@ -11,11 +11,8 @@ class HandleInvoiceCreated
 {
     public function handle(Invoice $invoice): void
     {
-        // Integrate with payment gateway
-
         $checkoutUrl = $this->integrateWithPaymentGateway($invoice);
 
-        // Send email with checkout URL
         $recipient = $invoice->billedFor->email ?? $invoice->email;
         Mail::to($recipient)->send(new InvoiceCreated($invoice, $checkoutUrl));
     }
@@ -25,7 +22,7 @@ class HandleInvoiceCreated
         $reference = Chapa::generateReference();
 
         $paymentData = [
-            'amount' => 100,
+            'amount' => $invoice->total,
             'email' => $invoice->billedFor->email ?? $invoice->email,
             'tx_ref' => $reference,
             'currency' => $invoice->currency->iso,
@@ -41,8 +38,6 @@ class HandleInvoiceCreated
         $payment = Chapa::initializePayment($paymentData);
 
         if ($payment['status'] !== 'success') {
-            // notify something went wrong
-            dd($payment);
             return null;
         }
 

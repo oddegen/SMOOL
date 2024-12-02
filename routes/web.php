@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChapaController;
 use Illuminate\Support\Facades\Route;
 
 use Spatie\WelcomeNotification\WelcomesNewUsers;
@@ -20,9 +21,6 @@ Route::group(['middleware' => ['web', WelcomesNewUsers::class,]], function () {
     Route::post('welcome/{user}', [LoginController::class, 'savePassword']);
 });
 
-Route::post('pay', 'App\Http\Controllers\ChapaController@initialize')->name('pay');
-
-// The callback url after a payment
-Route::get('callback/{reference}', 'App\Http\Controllers\ChapaController@callback')->name('callback');
+Route::get('/chapa/callback/{reference}', ChapaController::class)->name('chapa.callback');
 
 Route::view('/welcome', 'welcome');

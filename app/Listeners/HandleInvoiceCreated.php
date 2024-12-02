@@ -27,7 +27,7 @@ class HandleInvoiceCreated
             'email' => $invoice->billedFor->email ?? $invoice->email,
             'tx_ref' => $reference,
             'currency' => $invoice->currency->iso,
-            'callback_url' => route('callback', [$reference]),
+            'callback_url' => route('chapa.callback', $reference),
             'first_name' => $invoice->billedFor->first_name ?? explode(' ', $invoice->name)[0],
             'last_name' => $invoice->billedFor->last_name ?? (explode(' ', $invoice->name)[1] ?? ''),
             "customization" => [
@@ -37,6 +37,8 @@ class HandleInvoiceCreated
         ];
 
         $payment = Chapa::initializePayment($paymentData);
+
+        \Log::info($payment);
 
         if ($payment['status'] !== 'success') {
             return null;

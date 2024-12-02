@@ -1,6 +1,6 @@
-<div class="flex justify-center items-center h-full">
     <x-filament-panels::page>
-        @if ($generatedContent)
+        <x-filament::section>
+            @if ($generatedContent)
             <div class="space-y-4">
                 <div class="styled-content">
                     {!! $generatedContent !!}
@@ -11,5 +11,5 @@
             {{ $this->generateAction() }}
         @endif
         <x-filament-actions::modals />
+        </x-filament::section>
     </x-filament-panels::page>
-</div>

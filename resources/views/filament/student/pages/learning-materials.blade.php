@@ -2,7 +2,7 @@
         <x-filament::section>
             @if ($generatedContent)
             <div class="space-y-4">
-                <div class="styled-content">
+                <div wire:stream="generatedContent">
                     {!! $generatedContent !!}
                 </div>
                 {{ $this->generateAction() }}

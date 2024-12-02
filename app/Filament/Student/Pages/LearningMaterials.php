@@ -58,7 +58,7 @@ class LearningMaterials extends Page implements HasActions
         $batch = $user->sectionUsers()->currentYear()->first()->section->batches()->wherePivot('year', now()->year)->first();
 
 
-        $content = Gemini::geminiPro()->generateContent(
+        $stream = Gemini::geminiPro()->streamGenerateContent(
             'Create a personalized study guide for me. I\'m in batch ' . $batch->name . ' and here are my subjects and grades: ' . $grades->map(function ($grade) {
                 return sprintf(
                     "Subject: %s, Grade: %s",
@@ -68,11 +68,19 @@ class LearningMaterials extends Page implements HasActions
             })->implode('; ')
         );
 
+        $this->generatedContent = '';
+        $this->stream(to: 'generatedContent', content: '', replace: true);
+
+        foreach ($stream as $response) {
+            $this->generatedContent .= $response->text();
+            $this->stream(to: 'generatedContent', content: app(MarkdownParser::class)->parse($response->text()));
+        }
+
         GeneratedResource::create([
             'user_id' => auth()->id(),
-            'content' => $content->text(),
+            'content' => $this->generatedContent,
         ]);
 
-        $this->generatedContent = app(MarkdownParser::class)->parse($content->text());
+        $this->generatedContent = app(MarkdownParser::class)->parse($this->generatedContent);
     }
 }
